@@ -11,7 +11,7 @@ datasource db {
 model Order {
   id          Int            @id @default(autoincrement())
   orderNumber String
-  date        DateTime
+  date        DateTime       @default(now())
   status      OrderStatus    @default(PENDING)
   products    OrderProduct[]
 
