@@ -48,8 +48,33 @@ export class OrdersService {
     });
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    this.logger.log(`Updating order #${id}`, updateOrderDto);
+
+    // Delete existing products related to this order
+    await this.prismaService.orderProduct.deleteMany({
+      where: { orderId: id },
+    });
+
+    // Update the order and recreate product links
+    return this.prismaService.order.update({
+      where: { id },
+      data: {
+        orderNumber: updateOrderDto.orderNumber,
+        status: updateOrderDto.status,
+        ...(updateOrderDto.products && {
+          products: {
+            create: updateOrderDto.products.map((p) => ({
+              qty: p.qty,
+              unitPrice: p.unitPrice,
+              product: {
+                connect: { id: p.productId },
+              },
+            })),
+          },
+        }),
+      },
+    });
   }
 
   remove(id: number) {
