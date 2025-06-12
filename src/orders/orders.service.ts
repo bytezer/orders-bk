@@ -39,7 +39,13 @@ export class OrdersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} order`;
+    this.logger.log(`Finding order with id: ${id}`);
+    return this.prismaService.order.findUnique({
+      where: { id },
+      include: {
+        products: true,
+      },
+    });
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
@@ -47,6 +53,9 @@ export class OrdersService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} order`;
+    this.logger.log(`Removing order with id: ${id}`);
+    return this.prismaService.order.delete({
+      where: { id },
+    });
   }
 }
