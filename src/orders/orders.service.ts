@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma.service';
+import { Order, OrderStatus } from 'generated/prisma';
 
 @Injectable()
 export class OrdersService {
@@ -81,6 +82,14 @@ export class OrdersService {
     this.logger.log(`Removing order with id: ${id}`);
     return this.prismaService.order.delete({
       where: { id },
+    });
+  }
+
+  updateStatus(id: number, status: OrderStatus) {
+    this.logger.log(`Updating status of order #${id} to ${status}`);
+    return this.prismaService.order.update({
+      where: { id },
+      data: { status: status },
     });
   }
 }
