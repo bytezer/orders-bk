@@ -1,0 +1,45 @@
+# Node modules (serán instalados en la imagen)
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Environment files (puedes incluirlos si los necesitas dentro del contenedor)
+.env
+.env.*
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Editor settings
+.vscode
+.idea
+*.swp
+
+# Build artifacts
+dist
+coverage
+build
+
+# Prisma artifacts (si usas DB local, excluye también)
+prisma/dev.db
+prisma/migrations/*/README.md
+prisma/migrations/dev
+
+# Tests
+test-results
+*.test.ts
+*.spec.ts

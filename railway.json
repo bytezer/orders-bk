@@ -1,0 +1,8 @@
+{
+  "build": {
+    "dockerfilePath": "./dockerfile"
+  },
+  "run": {
+    "cmd": "node dist/main.js"
+  }
+}
